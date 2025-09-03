@@ -4,8 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        .container{
+            text-align: center;
+        }
+        .kopcinja{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            
+        }
+        .proizvodi{
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            width: 100%;
+            padding: 20px 10px;
+        }
+        .proizvod{
+            width: 16%;
+            border: 0.1px solid black;
+            box-shadow: 1px 2px 20px rgba(0, 0, 0, 0.268);
+            padding: 10px;
+        }
+        .proizvod img{
+            width: 80%;
+        }
+    </style>
 </head>
 <body>
-    
+    <div class="container">
+        <h1>Filter na proizvodi</h1>
+        <div class="kopicnja">
+            <button onclick="filterPro('All')">All</button>
+            <button onclick="filterPro('Sofa')">Sofa</button>
+            <button onclick="filterPro('Bed')">Bed</button>
+            <button onclick="filterPro('Chair')">Chair</button>
+        </div>
+        <div class="proizvodi" id="listaProizvodi">
+        </div>
+    </div>
+    <script>
+        const baza=[
+            {id:1 , ime:"Pro1", kategorija:"Sofa", cena:15000 , slika:"https://preview.colorlib.com/theme/furn/assets/img/gallery/popular1.png.webp", opis:"Opis1"},
+            {id:2 , ime:"Pro2", kategorija:"Bed", cena:12000 , slika:"https://preview.colorlib.com/theme/furn/assets/img/gallery/popular2.png.webp", opis:"Opis2 "},
+            {id:3 , ime:"Pro3", kategorija:"Sofa", cena:17000 , slika:"https://preview.colorlib.com/theme/furn/assets/img/gallery/popular3.png.webp", opis:"Opis3 "},
+            {id:4 , ime:"Pro4", kategorija:"Chair", cena:5000 , slika:"https://preview.colorlib.com/theme/furn/assets/img/gallery/popular4.png.webp", opis:"Opis4 "},
+            {id:5 , ime:"Pro5", kategorija:"Bed", cena:10000 , slika:"https://preview.colorlib.com/theme/furn/assets/img/gallery/popular5.png.webp", opis:"Opis5 "}
+        ];
+        const listaProizvodi=document.getElementById('listaProizvodi');
+
+        function prikaziPro(proizvodi){
+            listaProizvodi.innerHTML="";
+            proizvodi.forEach((proizvod,index) => {
+                const div=document.createElement("div");//<div></div>
+                div.classList.add("proizvod");//<div class="proizvod"></div>
+                div.innerHTML=`
+                <img src="${proizvod.slika}" alt="${proizvod.ime}">
+                <h3>${proizvod.ime}</h3>
+                <p>${proizvod.opis}</p>
+                <p>${proizvod.cena} .den</p>
+                <strong>${proizvod.kategorija}</strong>
+            `;
+            listaProizvodi.appendChild(div);
+
+        });
+
+    }
+
+
+    function filterPro(kategorija){
+        if(kategorija==="All"){
+            prikaziPro(baza);
+        }else{
+            const filterkat=baza.filter(proizvod=>proizvod.kategorija===kategorija);
+            prikaziPro(filterkat);
+        }
+    }
+
+    prikaziPro(baza);
+    </script>
 </body>
 </html>
